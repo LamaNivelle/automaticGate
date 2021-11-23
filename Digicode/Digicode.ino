@@ -80,6 +80,8 @@ int changePassword(){ //user can change the password
   }
 }
 
+int caca;
+
 void setup() {
   lcd.begin(16,2);
   Serial.begin(9600);
