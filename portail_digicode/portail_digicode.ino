@@ -1,16 +1,27 @@
 
 // créer une fonction pour ouvrir la porte
-// allumer la led verte avant le code du moteur
-// 
+// allumer la led verte
+ 
 
 #include <Servo.h>
 
-int Green_LED = 1;
-int Red_LED = 2;
+int RGB_LED = 1;
+int Yellow_LED = 2;
+
+void night(){
+  
+}
+
+void light() {
+  if night = 1
+  digitalWrite(1, HIGH);
+  delay(15)
+}
 
 void setup() {
   // create the code to run once
   pinMode(1, OUTPUT);
+  pinMode(2, OUTPUT);
 }
 
 void loop() {
