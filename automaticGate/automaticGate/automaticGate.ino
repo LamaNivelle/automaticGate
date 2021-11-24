@@ -190,7 +190,7 @@ int noteDurations[] = {
 void setup() {
   Serial.begin(9600);
   
-  //Hector
+  ///Hector
   lcd.begin(16,2);
   
   //Agathe
