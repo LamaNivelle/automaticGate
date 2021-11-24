@@ -102,9 +102,51 @@ void light(int night) {
   }
 }
 
+//**********************************************************Clem
+
+int pos; // position of the gate / servo
+
+int servo_open(int pos) { //OPENING FUNCTION
+  Servo servo; // creation of the object the servo
+
+   int pos; // call the actual position of the gate
+  int increment = 1 ; // increment between each position
+  bool actual_angle = false; // send to serie support the position of the servo
+
+  servo.attach(servoPin); // attach the servo to the pin
+
+  for(pos ; pos <= 90; pos += increment) {
+    servo.write(pos); // ask to servo to move to the new position
+    delay(50); // delay of 0,05 seconds between each new position
+    if (pos=90){
+      // STOPPER LA ROTATION
+    }
+  }
+}
+
+
+int servo_close(int pos) { //CLOSING FUNCTION
+  Servo servo // creation of the object the servo
+
+  int pos // call the actual position of the gate
+  int increment = 1 ; // increment between each position
+  bool actual_angle = false; // send to serie support the position of the servo
+
+  servo.attach(servoPin); // attach the servo to the pin
+
+  for(pos ; pos >= 90; pos -= increment) {
+    servo.write(pos); // ask to servo to move to the new position
+    delay(50); // delay of 0,05 seconds between each new position
+    if (pos=0){
+      // STOPPER LA ROTATION
+    }
+  }
+}
+
+
 //**********************************************************Antoine
 
-// creation of the function tht will permit to detect movement below the gate
+// creation of the function that will permit to detect movement below the gate
 int safety() { 
   long duration, distance;
   digitalWrite(trigPin, LOW);
