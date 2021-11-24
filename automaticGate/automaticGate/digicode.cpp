@@ -1,4 +1,5 @@
-
+#include <LiquidCrystal.h>
+#include <Keypad.h>
 #include "digicode.h"
 #include "Arduino.h"
 
