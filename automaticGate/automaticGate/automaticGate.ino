@@ -104,8 +104,9 @@ void light(int night) {
 
 //**********************************************************Clem
 
-int pos = 0; // position of the gate
-int servoPin = 3;
+int pos = 0; // position of thE GATE
+int servoPin = 9; // 9 or 10
+
 
 int servo_open(int pos) { //OPENING FUNCTION
   Servo servo; // creation of the object the servo
@@ -215,8 +216,6 @@ void setup() {
     noTone(8);
 
   //Clem
-  int pos = 0; // position of the gate
-  int servoPin = 3;
   pinMode(servoPin, OUTPUT);
   }
 
