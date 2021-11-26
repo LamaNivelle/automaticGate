@@ -104,12 +104,12 @@ void light(int night) {
 
 //**********************************************************Clem
 
-int pos; // position of the gate / servo
+int pos = 0; // position of the gate
+int servoPin = 3;
 
 int servo_open(int pos) { //OPENING FUNCTION
   Servo servo; // creation of the object the servo
 
-   int pos; // call the actual position of the gate
   int increment = 1 ; // increment between each position
   bool actual_angle = false; // send to serie support the position of the servo
 
@@ -126,9 +126,8 @@ int servo_open(int pos) { //OPENING FUNCTION
 
 
 int servo_close(int pos) { //CLOSING FUNCTION
-  Servo servo // creation of the object the servo
+  Servo servo; // creation of the object the servo
 
-  int pos // call the actual position of the gate
   int increment = 1 ; // increment between each position
   bool actual_angle = false; // send to serie support the position of the servo
 
@@ -214,10 +213,17 @@ void setup() {
     delay(pauseBetweenNotes);
     // stop the tone playing:
     noTone(8);
+
+  //Clem
+  int pos = 0; // position of the gate
+  int servoPin = 3;
+  pinMode(servoPin, OUTPUT);
   }
 
 }
 
 void loop() {
   initialization(password);
+  servo_open;
+  servo_close;
 }
