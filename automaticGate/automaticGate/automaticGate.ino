@@ -16,8 +16,6 @@ const byte COLS = 3;
 int password[Password_Length]={0,0,0,0};
 int admin[Password_Length]={0,5,1,1};
 int accepted=0;
-
-
 int confirmDigit=1;
 
 char hexaKeys[ROWS][COLS] = {
