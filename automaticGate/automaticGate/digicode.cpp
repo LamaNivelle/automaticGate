@@ -3,7 +3,6 @@
 #include "digicode.h"
 #include "Arduino.h"
 
-
 int initialization(int password[Password_Length]){
   lcd.clear();
   confirmPassword(password);   
