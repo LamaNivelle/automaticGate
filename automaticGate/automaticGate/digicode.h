@@ -8,6 +8,7 @@ extern int admin[Password_Length];
 extern int accepted;
 extern LiquidCrystal lcd;
 extern Keypad customKeypad;
+
 int initialization(int password[Password_Length]);
 int confirmPassword(int password[Password_Length]);
 int changePassword();

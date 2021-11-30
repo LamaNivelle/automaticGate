@@ -1,33 +1,33 @@
-#include <LiquidCrystal.h>
+#include <LiquidCrystal.h>    //including all the librairies we need
 #include <Keypad.h>
 #include <Servo.h>
-#include "pitches.h"
+#include "pitches.h"    //including all the headers we need
 #include "digicode.h"
-#define trigPin 13
+#define trigPin 13    //define the pins
 #define echoPin 12
-#define Password_Length 4
+#define Password_Length 4   //define global variable
 
 //**********************************************************Hector
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
-const byte ROWS = 4; 
-const byte COLS = 3; 
 
-int password[Password_Length]={0,0,0,0};
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;   //intialize the pins used by the lcd
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);    //define the lcd function
+
+int password[Password_Length]={0,0,0,0};    //initialize and declare the variable i'll need in my functions
 int admin[Password_Length]={0,5,1,1};
 int accepted=0;
 int confirmDigit=1;
 
+const byte ROWS = 4;    //initialize the keypad size
+const byte COLS = 3; 
 char hexaKeys[ROWS][COLS] = {
   {'1', '2', '3'},
   {'4', '5', '6'},
   {'7', '8', '9'},
   {'*', '0', '#'}
 };
-
-byte rowPins[ROWS] = {9, 8, 7, 6}; 
+byte rowPins[ROWS] = {9, 8, 7, 6};    //initialize the pins used by the keypad
 byte colPins[COLS] = {5, 4, 3}; 
-Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
+Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);   //define the customKeypad function
 
 
 //**********************************************************Agathe
@@ -121,10 +121,10 @@ int noteDurations[] = {
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600);   //setup the serial monitor
   
   //Hector
-  lcd.begin(16,2);
+  lcd.begin(16,2);    //setup the lcd screen
   
   //Agathe
   pinMode(1, OUTPUT);
@@ -152,5 +152,5 @@ void setup() {
 }
 
 void loop() {
-  initialization(password);
+  initialization(password);   //call function initialization
 }
