@@ -1,22 +1,21 @@
-#include <LiquidCrystal.h>    //including all the librairies we need
+#include <LiquidCrystal_I2C.h> //including all the librairies we need
+#include <Wire.h>
+#include <Password.h>
 #include <Keypad.h>
 #include <Servo.h>
 #include "pitches.h"    //including all the headers we need
 #include "digicode.h"
 #define trigPin 13    //define the pins
 #define echoPin 12
-#define Password_Length 4   //define global variable
 
 //**********************************************************Hector
 
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;   //intialize the pins used by the lcd
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);    //define the lcd function
-
-int password[Password_Length]={0,0,0,0};    //initialize and declare the variable i'll need in my functions
-int admin[Password_Length]={0,5,1,1};
+int password=0;   //initialize and declare the variable i'll need in my functions
+int admin=0511;
 int accepted=0;
 int confirmDigit=1;
 
+byte currentLength = 0 ;
 const byte ROWS = 4;    //initialize the keypad size
 const byte COLS = 3; 
 char hexaKeys[ROWS][COLS] = {
@@ -29,6 +28,9 @@ byte rowPins[ROWS] = {9, 8, 7, 6};    //initialize the pins used by the keypad
 byte colPins[COLS] = {5, 4, 3}; 
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);   //define the customKeypad function
 
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+
+Password password = Password("0000");
 
 //**********************************************************Agathe
 
@@ -124,7 +126,8 @@ void setup() {
   Serial.begin(9600);   //setup the serial monitor
   
   //Hector
-  lcd.begin(16,2);    //setup the lcd screen
+  lcd.init();    //initialize the lcd screen
+  lcd.backlight();
   
   //Agathe
   pinMode(1, OUTPUT);

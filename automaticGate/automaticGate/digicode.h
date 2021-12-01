@@ -6,7 +6,7 @@
 extern int password[Password_Length];
 extern int admin[Password_Length];
 extern int accepted;
-extern LiquidCrystal lcd;
+extern LiquidCrystal_I2C lcd;
 extern Keypad customKeypad;
 
 int initialization(int password[Password_Length]);
