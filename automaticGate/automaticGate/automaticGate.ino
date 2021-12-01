@@ -1,5 +1,6 @@
 #include <LiquidCrystal_I2C.h> //including all the librairies we need
 #include <Wire.h>
+
 #include <Password.h>
 #include <Keypad.h>
 #include <Servo.h>
@@ -10,7 +11,8 @@
 
 //**********************************************************Hector
 
-int password=0;   //initialize and declare the variable i'll need in my functions
+//initialize and declare the variable i'll need in my functions
+int pswd=0;
 int admin=0511;
 int accepted=0;
 int confirmDigit=1;
@@ -30,7 +32,8 @@ Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS)
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
-Password password = Password("0000");
+Password password = Password( "1234" );
+//Password.set(pswd);
 
 //**********************************************************Agathe
 
@@ -155,5 +158,5 @@ void setup() {
 }
 
 void loop() {
-  initialization(password);   //call function initialization
+  initialization();   //call function initialization
 }
