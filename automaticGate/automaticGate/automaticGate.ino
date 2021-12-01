@@ -52,23 +52,42 @@ void light(int night) {
 }
 
 //**********************************************************Clem
-/*
-  int pos; // call the actual position of the gate
-  int servoPin=9;
-  
-  int servo_open(int pos) { //OPENING FUNCTION
-    Servo servo; // creation of the object the servo
-    bool actual_angle = false; // send to serie support the position of the servo
-    Servo.attach(servoPin); // attach the servo to the pin
 
-    for(pos ; pos <= 90; pos++) {
-      Servo.write(pos); // ask to servo to move to the new position
-      delay(50); // delay of 0,05 seconds between each new position
-      if (pos=90){
-        // STOPPER LA ROTATION
-      }
+int pos = 0; // position of thE GATE
+int servoPin = 9; // 9 or 10
+
+
+int servo_open(int pos) { //OPENING FUNCTION
+  Servo servo; // creation of the object the servo
+
+  int increment = 1 ; // increment between each position
+  bool actual_angle = false; // send to serie support the position of the servo
+
+  servo.attach(servoPin); // attach the servo to the pin
+
+  for(pos ; pos <= 90; pos += increment) {
+    servo.write(pos); // ask to servo to move to the new position
+    delay(50); // delay of 0,05 seconds between each new position
+    if (pos=90){
+      // STOPPER LA ROTATION
     }
   }
+}
+
+
+int servo_close(int pos) { //CLOSING FUNCTION
+  Servo servo; // creation of the object the servo
+
+  int increment = 1 ; // increment between each position
+  bool actual_angle = false; // send to serie support the position of the servo
+
+  servo.attach(servoPin); // attach the servo to the pin
+
+  for(pos ; pos >= 90; pos -= increment) {
+    servo.write(pos); // ask to servo to move to the new position
+    delay(50); // delay of 0,05 seconds between each new position
+    if (pos=0){
+      // STOPPER LA ROTATION
 
   int servo_close(int pos) { //CLOSING FUNCTION
     Servo.attach(servoPin); // attach the servo to the pin
@@ -153,10 +172,15 @@ void setup() {
     delay(pauseBetweenNotes);
     // stop the tone playing:
     noTone(8);
+
+  //Clem
+  pinMode(servoPin, OUTPUT);
   }
 
 }
 
 void loop() {
-  initialization();   //call function initialization
+  initialization(password);
+  servo_open;
+  servo_close;
 }
