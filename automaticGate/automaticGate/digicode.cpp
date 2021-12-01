@@ -3,25 +3,38 @@
 #include "digicode.h"
 #include "Arduino.h"
 
-
-int initialization(int password[Password_Length]){
+// Define initialization function
+int initialization(){
   lcd.clear();
-  confirmPassword(password);   
+  confirmPassword();   
 }
 
-int confirmPassword(int password[Password_Length]){ //confirm the password enter by the user
-  int verifyPassword[4], i, accepted=0, errorCounter=0;
+// Define confirmPassword function
+int confirmPassword(){ //confirm the password enter by the user
+  int accepted=0, errorCounter=0;
+  char input = customKeypad.getKey();
+
   
-  while(accepted!=1){
-    if(errorCounter==3){
-      for(i=0;i<3;i++){
-        lcd.clear();
-        lcd.setCursor(2,0);
-        lcd.print("Too many errors, wait for ");
-        lcd.print(3-i);
-        lcd.print(" seconds");
-        delay(1000);
-      }
+  switch (input){
+    case '#': //reset password
+    password.reset();
+    //currentLength = 0;
+    lcd.clear();
+    lcd.print("reset pswd");
+    delay(3000);
+    lcd.clear();
+    break;
+    case '*': //evaluate password
+    while(accepted!=1){
+      if(errorCounter==3){    //if too many errors have been made
+        for(int i=0;i<3;i++){     //make the user wait for 3 seconds
+          lcd.clear();
+          lcd.setCursor(2,0);
+          lcd.print("Too many errors, wait for ");
+          lcd.print(3-i);
+          lcd.print(" seconds");
+          delay(1000);
+        }
     }
     lcd.clear();
     lcd.setCursor(2,0);
@@ -37,24 +50,17 @@ int confirmPassword(int password[Password_Length]){ //confirm the password enter
               changePassword();
               else errorCounter++;
   }
+  }
 }
 
 int changePassword(){ //user can change the password
-  int confirmDigit=1;
   lcd.clear();
   lcd.setCursor(2,0);
   lcd.print("Choose a new 4-digits password");
   lcd.setCursor(5,1);
-  while(confirmDigit==1){
-    int i;
-    for(i=0;i<4;i++){
-      password[i]=customKeypad.getKey();
-    }
     lcd.clear();
     lcd.setCursor(2,0);
     lcd.print("To confirm password : tap 0");
     lcd.setCursor(2,1); 
     lcd.print("else, tap any other number");
-    confirmDigit=customKeypad.getKey();
   }
-}

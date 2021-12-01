@@ -3,10 +3,15 @@
 #include <LiquidCrystal.h>
 #include <Keypad.h>
 #include "Arduino.h"
-#define Password_Length 4
 
-int initialization(int password[Password_Length]);
-int confirmPassword(int password[Password_Length]);
+extern int admin;
+extern int accepted;
+extern LiquidCrystal_I2C lcd;
+extern Keypad customKeypad;
+extern Password password;
+
+int initialization();
+int confirmPassword();
 int changePassword();
 
 #endif

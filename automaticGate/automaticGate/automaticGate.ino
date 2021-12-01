@@ -1,4 +1,7 @@
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h> //including all the librairies we need
+#include <Wire.h>
+
+#include <Password.h>
 #include <Keypad.h>
 #include <Servo.h>
 #include "pitches.h"
@@ -9,13 +12,9 @@
 
 //**********************************************************Hector
 
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
-const byte ROWS = 4; 
-const byte COLS = 3; 
-
-int password[Password_Length]={0,0,0,0};
-int admin[Password_Length]={0,5,1,1};
+//initialize and declare the variable i'll need in my functions
+int pswd=0;
+int admin=0511;
 int accepted=0;
 
 
@@ -67,25 +66,8 @@ int confirmPassword(int password[Password_Length]){ //confirm the password enter
   }
 }
 
-int changePassword(){ //user can change the password
-  int confirmDigit=1;
-  lcd.clear();
-  lcd.setCursor(2,0);
-  lcd.print("Choose a new 4-digits password");
-  lcd.setCursor(5,1);
-  while(confirmDigit==1){
-    int i;
-    for(i=0;i<4;i++){
-      password[i]=customKeypad.getKey();
-    }
-    lcd.clear();
-    lcd.setCursor(2,0);
-    lcd.print("To confirm password : tap 0");
-    lcd.setCursor(2,1); 
-    lcd.print("else, tap any other number");
-    confirmDigit=customKeypad.getKey();
-  }
-}
+Password password = Password( "1234" );
+//Password.set(pswd);
 
 //**********************************************************Agathe
 
