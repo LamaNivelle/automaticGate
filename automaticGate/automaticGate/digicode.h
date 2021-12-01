@@ -1,13 +1,9 @@
 #ifndef DIGICODE_H
 #define DIGICODE_H
+#include <LiquidCrystal.h>
+#include <Keypad.h>
 #include "Arduino.h"
 #define Password_Length 4
-
-extern int password[Password_Length];
-extern int admin[Password_Length];
-extern int accepted;
-extern LiquidCrystal_I2C lcd;
-extern Keypad customKeypad;
 
 int initialization(int password[Password_Length]);
 int confirmPassword(int password[Password_Length]);
