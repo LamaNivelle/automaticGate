@@ -1,14 +1,12 @@
 #include <LiquidCrystal_I2C.h> //including all the librairies we need
 #include <Wire.h>
-
 #include <Password.h>
 #include <Keypad.h>
 #include <Servo.h>
+#include "digicode.h"
 #include "pitches.h"
 #define trigPin 13
 #define echoPin 12
-
-#define Password_Length 4
 
 //**********************************************************Hector
 
@@ -16,9 +14,11 @@
 int pswd=0;
 int admin=0511;
 int accepted=0;
-
-
 int confirmDigit=1;
+
+byte currentLength = 0 ;
+const byte ROWS = 4;    //initialize the keypad size
+const byte COLS = 3; 
 
 char hexaKeys[ROWS][COLS] = {
   {'1', '2', '3'},
@@ -29,44 +29,12 @@ char hexaKeys[ROWS][COLS] = {
 
 byte rowPins[ROWS] = {9, 8, 7, 6}; 
 byte colPins[COLS] = {5, 4, 3}; 
-Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
-int initialization(int password[Password_Length]){
-  lcd.clear();
-  confirmPassword(password);   
-}
+Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
-int confirmPassword(int password[Password_Length]){ //confirm the password enter by the user
-  int verifyPassword[4], i, accepted=0, errorCounter=0;
-  
-  while(accepted!=1){
-    if(errorCounter==3){
-      for(i=0;i<3;i++){
-        lcd.clear();
-        lcd.setCursor(2,0);
-        lcd.print("Too many errors, wait for ");
-        lcd.print(3-i);
-        lcd.print(" seconds");
-        delay(1000);
-      }
-    }
-    lcd.clear();
-    lcd.setCursor(2,0);
-    lcd.print("Enter password:");
-    lcd.setCursor(5,1);
-    for(i=0;i<4;i++){
-      verifyPassword[i]=customKeypad.getKey();
-      lcd.print("*");
-    }
-    if(verifyPassword[1]==password[1] && verifyPassword[2]==password[2] && verifyPassword[3]==password[3] && verifyPassword[4]==password[4])
-      accepted=1;
-      else if(verifyPassword[1]==admin[1] && verifyPassword[2]==admin[2] && verifyPassword[3]==admin[3] && verifyPassword[4]==admin[4])
-              changePassword();
-              else errorCounter++;
-  }
-}
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
-Password password = Password( "1234" );
+//Password password = Password( "1234" );
 //Password.set(pswd);
 
 //**********************************************************Agathe
@@ -174,7 +142,8 @@ void setup() {
   Serial.begin(9600);
   
   //Hector
-  lcd.begin(16,2);
+  lcd.init();    //initialize the lcd screen
+  lcd.backlight();
   
   //Agathe
   pinMode(1, OUTPUT);
@@ -205,7 +174,7 @@ void setup() {
 }
 
 void loop() {
-  initialization(password);
+  initialization();
   servo_open;
   servo_close;
 }

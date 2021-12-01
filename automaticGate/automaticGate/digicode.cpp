@@ -1,4 +1,5 @@
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
+#include <Password.h>
 #include <Keypad.h>
 #include "digicode.h"
 #include "Arduino.h"
@@ -13,8 +14,6 @@ int initialization(){
 int confirmPassword(){ //confirm the password enter by the user
   int accepted=0, errorCounter=0;
   char input = customKeypad.getKey();
-
-  
   switch (input){
     case '#': //reset password
     password.reset();
@@ -35,21 +34,24 @@ int confirmPassword(){ //confirm the password enter by the user
           lcd.print(" seconds");
           delay(1000);
         }
+      }
+      lcd.print("Enter password:");   //ask the user to enter the password
+      if(password.evaluate()){
+        lcd.clear();
+        lcd.setCursor(2,0);
+        lcd.print("Correct pswd");
+        delay(3000);
+        lcd.clear();
+      } 
+      else {
+        lcd.clear();
+        lcd.setCursor(2,0);
+        lcd.print("Wrong pswd");
+        delay(3000);
+        lcd.clear();
+        errorCounter++;
+      }
     }
-    lcd.clear();
-    lcd.setCursor(2,0);
-    lcd.print("Enter password:");
-    lcd.setCursor(5,1);
-    for(i=0;i<4;i++){
-      verifyPassword[i]=customKeypad.getKey();
-      lcd.print("*");
-    }
-    if(verifyPassword[1]==password[1] && verifyPassword[2]==password[2] && verifyPassword[3]==password[3] && verifyPassword[4]==password[4])
-      accepted=1;
-      else if(verifyPassword[1]==admin[1] && verifyPassword[2]==admin[2] && verifyPassword[3]==admin[3] && verifyPassword[4]==admin[4])
-              changePassword();
-              else errorCounter++;
-  }
   }
 }
 

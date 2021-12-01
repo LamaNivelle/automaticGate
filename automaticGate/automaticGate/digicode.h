@@ -1,6 +1,7 @@
 #ifndef DIGICODE_H
 #define DIGICODE_H
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
+#include <Password.h>
 #include <Keypad.h>
 #include "Arduino.h"
 
