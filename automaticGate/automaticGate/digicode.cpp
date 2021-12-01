@@ -1,43 +1,62 @@
-#include <LiquidCrystal.h>
+#include <Password.h>
+#include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
 #include "digicode.h"
 #include "Arduino.h"
 
-
+// Define initialization function
 int initialization(int password[Password_Length]){
   lcd.clear();
   confirmPassword(password);   
 }
 
-int confirmPassword(int password[Password_Length]){ //confirm the password enter by the user
-  int verifyPassword[4], i, accepted=0, errorCounter=0;
+// Define confirmPassword function
+int confirmPassword(int password){ //confirm the password enter by the user
+  int accepted=0, errorCounter=0;
+  char input = customKeypad.getKey();
+
   
-  while(accepted!=1){
-    if(errorCounter==3){
-      for(i=0;i<3;i++){
-        lcd.clear();
-        lcd.setCursor(2,0);
-        lcd.print("Too many errors, wait for ");
-        lcd.print(3-i);
-        lcd.print(" seconds");
-        delay(1000);
-      }
+  switch (input){
+    case '#': //reset password
+    password.reset();
+    currentLength = 0;
+    lcd.clear();
+    lcd.print("reset pswd");
+    delay(3000);
+    lcd.clear();
+    break;
+    case '*': //evaluate password
+    while(accepted!=1){
+      if(errorCounter==3){    //if too many errors have been made
+        for(int i=0;i<3;i++){     //make the user wait for 3 seconds
+          lcd.clear();
+          lcd.setCursor(2,0);
+          lcd.print("Too many errors, wait for ");
+          lcd.print(3-i);
+          lcd.print(" seconds");
+          delay(1000);
+        }
     }
     lcd.clear();
     lcd.setCursor(2,0);
-    lcd.print("Enter password:");
-    lcd.setCursor(5,1);
-    for(i=0;i<4;i++){
-      verifyPassword[i]=customKeypad.getKey();
-      lcd.print("*");
-    }
-    if(verifyPassword[1]==password[1] && verifyPassword[2]==password[2] && verifyPassword[3]==password[3] && verifyPassword[4]==password[4])
+    lcd.print("Enter password:");   //ask the user to enter the password
+    if(password.evaluate()){
+      lcd.clear();
+      lcd.setCursor(2,0);
+      lcd.print("Correct pswd");
+      delay(3000);
+      lcd.clear();
       accepted=1;
-      else if(verifyPassword[1]==admin[1] && verifyPassword[2]==admin[2] && verifyPassword[3]==admin[3] && verifyPassword[4]==admin[4])
-              changePassword();
-              else errorCounter++;
+    }
+    else {
+      lcd.clear();
+      lcd.setCursor(2,0);
+      lcd.print("Wrong pswd");
+      delay(3000);
+      lcd.clear();
+      errorCounter++;
+    }
   }
-}
 
 int changePassword(){ //user can change the password
   int confirmDigit=1;
